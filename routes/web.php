@@ -16,22 +16,20 @@ use App\Http\Controllers\OrderController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
 
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 // Product Routes
-Route::get('/products', [ProductController::class, 'index']);
-Route::get('/products/{product}', [ProductController::class, 'show']);
+Route::get('/', [ProductController::class, 'index'])->name('products.index');;
+Route::get('/products/{product}', [ProductController::class, 'show'])->name('products.show');
 
 // Cart Routes
 Route::post('/cart', [CartController::class, 'store']);
 Route::get('/cart', [CartController::class, 'index']);
-Route::delete('/cart/{product}', [CartController::class, 'destroy']);
+Route::delete('/cart/{cart}', [CartController::class, 'destroy'])->name('cart.destroy');
+
 
 // Order Routes
 Route::get('/orders', [OrderController::class, 'index']);

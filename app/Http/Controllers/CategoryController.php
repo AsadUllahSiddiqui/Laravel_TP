@@ -8,11 +8,17 @@ use Illuminate\Support\Facades\Validator;
 
 class CategoryController extends Controller
 {
-  public function index()
+  public function index(Request $request)
   {
-     $categories= Category::latest()->paginate(10);
+    $categories = Category::latest();
+    if (!empty($request->get('keyword'))) {
+      $categories = $categories->where('name', 'like', '%' . $request->get('keyword') . '%');
+    }
+
+    $categories = $categories->paginate(10);
+
     // $data['categories'] = $categories;
-     return view('admin.category.list',compact('categories'));
+    return view('admin.category.list', compact('categories'));
   }
 
   public function create()
@@ -40,10 +46,10 @@ class CategoryController extends Controller
       $category->status = $request->status;
       $category->save();
 
-      $request->session()->flash("success","Category added successfully");
+      $request->session()->flash("success", "Category added successfully");
       return response()->json([
         'status' => true,
-        'message' => "Category added successfully"
+        'message' => "Category addaasdased successfully"
       ]);
     }
   }

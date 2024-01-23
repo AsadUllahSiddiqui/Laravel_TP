@@ -7,6 +7,8 @@ use App\Models\TempImage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\File;
+use Intervention\Image\Laravel\Facades\Image;
+use Intervention\Image\ImageManager;
 
 class CategoryController extends Controller
 {
@@ -58,6 +60,13 @@ class CategoryController extends Controller
         $sPath = public_path() . '/temp/' . $tempImage->name;
         $dPath = public_path() . '/uploads/category/' . $newImageName;
         File::copy($sPath, $dPath);
+
+        //create thumbails
+        $dPath = public_path() . '/uploads/category/thumb/' . $newImageName;
+        $image = ImageManager::imagick()->read($sPath);
+        $image = $image->resizeDown(450, 600);
+        $image->save($dPath);
+
 
         $category->image = $newImageName;
         $category->save();

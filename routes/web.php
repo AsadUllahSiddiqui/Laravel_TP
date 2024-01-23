@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\admin\AdminLoginController;
+use App\Http\Controllers\admin\TempImagesController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Http\Request;
@@ -35,6 +36,9 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('/categories/create', [CategoryController::class, 'create'])->name('categories.create');
     Route::post('/categories', [CategoryController::class, 'store'])->name('categories.store');
     Route::get('/categories', [CategoryController::class, 'index'])->name('categories.index');
+
+    Route::post('/upload-temp-image', [TempImagesController::class, 'create'])->name('temp-images.create');
+    // temp-images.create
 
     // returns auto-geerated-slugs based on title
     Route::get('/getSlug', function (Request $request) {

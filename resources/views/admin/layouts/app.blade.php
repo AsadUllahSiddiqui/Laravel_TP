@@ -11,10 +11,11 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href={{ asset('admin_assets/plugins/fontawesome-free/css/all.min.css') }}>
 
+    <link rel="stylesheet" href={{ asset('admin_assets/plugins/dropzone/min/dropzone.min.css') }}>
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ asset('admin_assets/css/adminlte.min.css')}}">
     <link rel="stylesheet" href="{{ asset('admin_assets/css/custom.css')}}">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="csrf_token" content="{{ csrf_token() }}">
 
 </head>
 
@@ -89,11 +90,14 @@
 	<script src="{{ asset('admin_assets/js/adminlte.min.js')}}"></script>
 	<!-- AdminLTE for demo purposes -->
     <script src=" {{ asset('admin_assets/js/demo.js')}} "></script>
+    <!-- dropzone for uploading images -->
+    <script src="{{ asset('admin_assets/plugins/dropzone/min/dropzone.min.js')}}"></script>
+
 
     <script type="text/javascript">
 		$.ajaxSetup({
 			headers: {
-				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+				'X-CSRF-TOKEN': $('meta[name="csrf_token"]').attr('content')
 			}
 		});
     </script>

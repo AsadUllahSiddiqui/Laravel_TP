@@ -3,8 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\TempImage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\File;
+use Intervention\Image\Laravel\Facades\Image;
+use Intervention\Image\ImageManager;
 
 class CategoryController extends Controller
 {
@@ -46,6 +50,28 @@ class CategoryController extends Controller
       $category->slug = $request->slug;
       $category->status = $request->status;
       $category->save();
+
+      //save image here
+      if (!empty($request->image_id)) {
+        $tempImage = TempImage::find($request->image_id);
+        $extArray = explode('.', $tempImage->name);
+        $ext = last($extArray);
+        $newImageName = $category->id . '.' . $ext;
+        $sPath = public_path() . '/temp/' . $tempImage->name;
+        $dPath = public_path() . '/uploads/category/' . $newImageName;
+        File::copy($sPath, $dPath);
+
+        //create thumbails
+        $dPath = public_path() . '/uploads/category/thumb/' . $newImageName;
+        $image = ImageManager::imagick()->read($sPath);
+        $image = $image->resizeDown(450, 600);
+        $image->save($dPath);
+
+
+        $category->image = $newImageName;
+        $category->save();
+
+      }
 
       $request->session()->flash("success", "Category added successfully");
       return response()->json([

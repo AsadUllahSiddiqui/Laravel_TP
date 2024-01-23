@@ -34,6 +34,7 @@ class CategoryController extends Controller
 
     ]);
     if ($validator->fails()) {
+      $request->session()->flash("error", $validator->errors());
       return response()->json([
         'status' => false,
         'errors' => $validator->errors()

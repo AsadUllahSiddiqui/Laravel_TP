@@ -66,24 +66,24 @@
 @section('customJs')
 <script>
 
-  $("#categoryForm").submit(function(event){
-    evet.preventDefault();
-    var element = $(this);
-    $.ajax({
-      url: '{{ route("categories.store") }}',
-      type: 'post',
-      data: element.serializeArray(),
-      dataType: 'json',
-      success: function(response){
-        if(response["status"]== true){
-          window.location.href = "{{ route('categories.store') }}" ;
-        }
-
-      },error:function(jqXHR,exception){
-        console.log('something went wroge');
-      }
-    })
+$("#categoryForm").submit(function(event) {
+  event.preventDefault();
+  var element = $(this);
+  $.ajax({
+    url: '{{ route("categories.store") }}',
+    type: 'post',
+    data: element.serializeArray(),
+    dataType: 'json',
+    success: function(response) {
+      // if (response["status"] == true) {
+        window.location.href = "{{ route('categories.index') }}"; // Redirect to the index page
+      // }
+    },
+    error: function(jqXHR, exception) {
+      console.log('something went wrong');
+    }
   });
+});
 
   $('#name').change(function(){
     $element = $(this);

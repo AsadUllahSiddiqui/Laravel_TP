@@ -95,13 +95,13 @@
       data: element.serializeArray(),
       dataType: 'json',
       success: function(response) {
-        if (response["status"] == true) {
+        // if (response["status"] == true) {
           window.location.href = "{{ route('sub-categories.index') }}"; // Redirect to the index page
-        }
+        // }
       },
       error: function(jqXHR, exception) {
         console.log('something went wrong');
-      }
+      } 
     });
   });
 

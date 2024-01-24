@@ -76,7 +76,7 @@ class SubCategoryController extends Controller
 
             if ($validator->passes()) {
 
-                $subCategory = new SubCategory();
+                // $subCategory = new SubCategory();    
                 $subCategory->name = $request->name;
                 $subCategory->slug = $request->slug;
                 $subCategory->category_id = $request->category_id;

@@ -3,6 +3,7 @@
 use App\Http\Controllers\admin\AdminLoginController;
 use App\Http\Controllers\admin\BrandController;
 use App\Http\Controllers\admin\ProductController;
+use App\Http\Controllers\admin\ProductSubCategoryController;
 use App\Http\Controllers\admin\SubCategoryController;
 use App\Http\Controllers\admin\TempImagesController;
 use App\Http\Controllers\CategoryController;
@@ -65,6 +66,10 @@ Route::group(['prefix' => 'admin'], function () {
 
     // temp image routes
     Route::post('/upload-temp-image', [TempImagesController::class, 'create'])->name('temp-images.create');
+
+
+    // get product's subcategories
+    Route::get('/product-subcategories', [ProductSubCategoryController::class, 'index'])->name('product-subcategories.index');
 
     // returns auto-geerated-slugs based on title
     Route::get('/getSlug', function (Request $request) {

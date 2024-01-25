@@ -139,9 +139,7 @@
                                   <div class="mb-3">
                                       <label for="category">Sub category</label>
                                       <select name="sub_category" id="sub_category" class="form-control">
-                                          <option value="">Mobile</option>
-                                          <option value="">Home Theater</option>
-                                          <option value="">Headphones</option>
+                                          <option value="">Select a sub category</option>
                                       </select>
                                   </div>
                               </div>
@@ -221,6 +219,28 @@
           if(response['status'] == 'true'){
             $("#slug").val(response["slug"]);
           }
+        }
+      });
+
+    });
+
+    $('#category').change(function(){
+      var $category_id = $(this).val();
+      $element = $(this);
+      $.ajax({
+        url: '{{ route("product-subcategories.index") }}',
+        type: 'get',
+        data: {'category_id': $category_id},
+        dataType: 'json',
+        success: function(response){
+            $('#sub_category').find( 'option').not(':first').remove();
+            $.each(response['subCategories'],function(key,item){
+              $('#sub_category').append(`<option =>'${item.id}'>${item.name}</option>`)
+            })
+          // if(response['status'] == 'true'){
+          //   $("#slug").val(response["slug"]);
+          // }
+          // console.log(response);
         }
       });
 

@@ -63,6 +63,7 @@ Route::group(['prefix' => 'admin'], function () {
 
     // Products routes
     Route::get('/products/create', [ProductController::class, 'create'])->name('products.create');
+    Route::post('/products', [ProductController::class, 'store'])->name('products.store');
 
     // temp image routes
     Route::post('/upload-temp-image', [TempImagesController::class, 'create'])->name('temp-images.create');

@@ -97,9 +97,13 @@
                                           </div>
                                       </div>
                                       <div class="col-md-12">
-                                          <div class="mb-3">
+                                            <div class="mb-3">
                                               <div class="custom-control custom-checkbox">
-                                                  <input class="custom-control-input" type="checkbox" id="track_qty" name="track_qty" checked>
+                                                  <!-- Hidden input to hold the actual value -->
+                                                  <input type="hidden" id="track_qty_hidden" name="track_qty" value="No">
+
+                                                  <!-- Visible checkbox input -->
+                                                  <input class="custom-control-input" type="checkbox" id="track_qty" onchange="updateTrackQty()">
                                                   <label for="track_qty" class="custom-control-label">Track Quantity</label>
                                               </div>
                                           </div>
@@ -148,7 +152,7 @@
                               <div class="card-body">
                                   <h2 class="h4 mb-3">Product brand</h2>
                                   <div class="mb-3">
-                                      <select name="status" id="status" class="form-control">
+                                      <select name="brand" id="brand" class="form-control">
                                         @if ($brands->isNotEmpty())
                                           @foreach ($brands as $brand )
                                             <option value="{{$brand->id}}">{{$brand->name}}</option>
@@ -162,9 +166,9 @@
                               <div class="card-body">
                                   <h2 class="h4 mb-3">Featured product</h2>
                                   <div class="mb-3">
-                                      <select name="status" id="status" class="form-control">
-                                          <option value="0">No</option>
-                                          <option value="1">Yes</option>
+                                      <select name="is_featured" id="is_featured" class="form-control">
+                                          <option value="No">No</option>
+                                          <option value="Yes">Yes</option>
                                       </select>
                                   </div>
                               </div>
@@ -188,18 +192,24 @@
 
 <script>
 
+  function updateTrackQty() {
+      var checkbox = document.getElementById('track_qty');
+      var hiddenInput = document.getElementById('track_qty_hidden');
+      hiddenInput.value = checkbox.checked ? 'Yes' : 'No';
+  }
+
   $("#productForm").submit(function(event) {
     console.log("event")
     event.preventDefault();
     var element = $(this);
     $.ajax({
-      url: '{{ route("categories.store") }}',
+      url: '{{ route("products.store") }}',
       type: 'post',
       data: element.serializeArray(),
       dataType: 'json',
       success: function(response) {
         // if (response["status"] == true) {
-          window.location.href = "{{ route('categories.index') }}"; // Redirect to the index page
+         // window.location.href = "{{ route('categories.index') }}"; // Redirect to the index page
         // }
       },
       error: function(jqXHR, exception) {

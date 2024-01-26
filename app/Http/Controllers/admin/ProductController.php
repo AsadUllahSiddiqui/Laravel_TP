@@ -25,7 +25,7 @@ class ProductController extends Controller
     {
         $rules = [
             'title' => 'required',
-            'slug' => 'required|unique:sub_categories',
+            'slug' => 'required|unique:products',
             'sku' => 'required',
             'price' => 'required|numeric',
             'status' => 'required',
@@ -43,19 +43,26 @@ class ProductController extends Controller
 
         if ($validator->passes()) {
 
-            // $product = new Product();
-            // $product->title = $request->title;
-            // $product->slug = $request->slug;
-            // $product->category_id = $request->category_id;
-            // $product->sub_category_id = $request->sub_category_id;
-            // $product->brand_id = $request->brand_id;
-            // $product->status = $request->status;
-            // $product->save();
-            // $request->session()->flash("success", "Sub Category added successfully");
-            // return response([
-            //     'status' => true,
-            //     'success' => "Sub category created successfully"
-            // ]);
+            $product = new Product();
+            $product->title = $request->title;
+            $product->slug = $request->slug;
+            $product->description = $request->description;
+            $product->barcode = $request->barcode;
+            $product->category_id = $request->category;
+            $product->sub_category_id = $request->sub_category;
+            $product->brand_id = $request->brand;
+            $product->sku = $request->sku;
+            $product->track_qty = $request->track_qty;
+            $product->qty = $request->qty;
+            $product->price = $request->price;
+            $product->is_featured = $request->is_featured;
+            $product->compare_price = $request->compare_price;
+            $product->save();
+            $request->session()->flash("success", "Product created successfully");
+            return response([
+                'status' => true,
+                'success' => "Product created successfully"
+            ]);
 
 
         } else {

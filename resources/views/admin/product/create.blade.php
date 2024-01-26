@@ -67,7 +67,7 @@
                                       <div class="col-md-12">
                                           <div class="mb-3">
                                               <label for="price">Price</label>
-                                              <input type="text" name="price" id="price" class="form-control" placeholder="Price">
+                                              <input type="text" value="" name="price" id="price" class="form-control" placeholder="Price">
                                               <p class= "error"> </p>
                                           </div>
                                       </div>
@@ -148,7 +148,7 @@
                                       <p class= "error"> </p>
                                   </div>
                                   <div class="mb-3">
-                                      <label for="category">Sub category</label>
+                                      <label for="sub_category">Sub category</label>
                                       <select name="sub_category" id="sub_category" class="form-control">
                                           <option value="">Select a sub category</option>
                                       </select>
@@ -211,6 +211,7 @@
   $("#productForm").submit(function(event) {
     console.log("event")
     event.preventDefault();
+    $() 
     var element = $(this);
     $.ajax({
       url: '{{ route("products.store") }}',
@@ -223,10 +224,9 @@
         }
         else{
           var errors= response['errors']
-
-
-
           $('.error').removeClass('invalid-feedback').html('');
+          $("input[type='text'],select").removeClass('is-invalid');
+
           $.each(errors,function(key,value){
               $(`#${key}`).addClass('is-invalid').siblings('p').addClass('invalid-feedback').html(value);
           });
@@ -279,7 +279,8 @@
         success: function(response){
             $('#sub_category').find( 'option').not(':first').remove();
             $.each(response['subCategories'],function(key,item){
-              $('#sub_category').append(`<option =>'${item.id}'>${item.name}</option>`)
+              $('#sub_category').append(`<option value='${item.id}'>${item.name}</option>`)
+
             })
           // if(response['status'] == 'true'){
           //   $("#slug").val(response["slug"]);

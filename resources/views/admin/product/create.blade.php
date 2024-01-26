@@ -31,12 +31,14 @@
                                           <div class="mb-3">
                                               <label for="title">Title</label>
                                               <input type="text" name="title" id="title" class="form-control" placeholder="Title">
+                                              <p class= "error"> </p>
                                           </div>
                                       </div>
                                       <div class="col-md-12">
                                         <div class="mb-3">
                                             <label for="title">Slug</label>
                                             <input type="text" readonly name="slug" id="slug" class="form-control" placeholder="slug">
+                                            <p class= "error"> </p>
                                         </div>
                                     </div>
                                       <div class="col-md-12">
@@ -66,6 +68,7 @@
                                           <div class="mb-3">
                                               <label for="price">Price</label>
                                               <input type="text" name="price" id="price" class="form-control" placeholder="Price">
+                                              <p class= "error"> </p>
                                           </div>
                                       </div>
                                       <div class="col-md-12">
@@ -88,6 +91,7 @@
                                           <div class="mb-3">
                                               <label for="sku">SKU (Stock Keeping Unit)</label>
                                               <input type="text" name="sku" id="sku" class="form-control" placeholder="sku">
+                                              <p class= "error"> </p>
                                           </div>
                                       </div>
                                       <div class="col-md-6">
@@ -109,6 +113,7 @@
                                           </div>
                                           <div class="mb-3">
                                               <input type="number" min="0" name="qty" id="qty" class="form-control" placeholder="Qty">
+                                              <p class= 'error'></p>
                                           </div>
                                       </div>
                                   </div>
@@ -124,6 +129,7 @@
                                           <option value="1">Active</option>
                                           <option value="0">Block</option>
                                       </select>
+                                      <p class= "error"> </p>
                                   </div>
                               </div>
                           </div>
@@ -139,12 +145,14 @@
                                           @endforeach
                                         @endif
                                       </select>
+                                      <p class= "error"> </p>
                                   </div>
                                   <div class="mb-3">
                                       <label for="category">Sub category</label>
                                       <select name="sub_category" id="sub_category" class="form-control">
                                           <option value="">Select a sub category</option>
                                       </select>
+                                      <p class= "error"> </p>
                                   </div>
                               </div>
                           </div>
@@ -160,6 +168,7 @@
                                         @endif
                                       </select>
                                   </div>
+                                  <p class= "error"> </p>
                               </div>
                           </div>
                           <div class="card mb-3">
@@ -171,6 +180,7 @@
                                           <option value="Yes">Yes</option>
                                       </select>
                                   </div>
+                                  <p class= "error"> </p>
                               </div>
                           </div>
                       </div>
@@ -208,9 +218,33 @@
       data: element.serializeArray(),
       dataType: 'json',
       success: function(response) {
-        // if (response["status"] == true) {
-         // window.location.href = "{{ route('categories.index') }}"; // Redirect to the index page
-        // }
+        if (response["status"] == true) {
+        // window.location.href = "{{ route('categories.index') }}"; // Redirect to the index page
+        }
+        else{
+          var errors= response['errors']
+
+
+
+          $('.error').removeClass('invalid-feedback').html('');
+          $.each(errors,function(key,value){
+              $(`#${key}`).addClass('is-invalid').siblings('p').addClass('invalid-feedback').html(value);
+          });
+
+          // if(errors['title']){
+          //   $('#title').addClass('is-invalid')
+          //   .siblings('p')
+          //   .addClass('invalid-feedback')
+          //   .html(errors['title']);
+          // }else{
+          //   $('#title').removeClass('is-invalid')
+          //   .siblings('p')
+          //   .removeClass('invalid-feedback')
+          //   .html('');
+          // }
+
+
+        }
       },
       error: function(jqXHR, exception) {
         console.log('something went wrong');

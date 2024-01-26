@@ -214,7 +214,6 @@
   $("#productForm").submit(function(event) {
     console.log("event")
     event.preventDefault();
-    $()
     var element = $(this);
     $.ajax({
       url: '{{ route("products.store") }}',
@@ -223,8 +222,8 @@
       dataType: 'json',
       success: function(response) {
         if (response["status"] == true) {
-        // window.location.href = "{{ route('categories.index') }}"; // Redirect to the index page
-        }
+           window.location.href = "{{ route('products.index') }}"; // Redirect to the index page
+         }
         else{
           var errors= response['errors']
           $('.error').removeClass('invalid-feedback').html('');
@@ -314,19 +313,24 @@
       }, success: function(file, response){
           // $("#image_id").val(response.image_id);
 
-         var html= ` <div class='col-md-3'> <div class="card">
+         var html= ` <div class='col-md-3' id= 'image-row-${response.image_id}'> <div class="card">
             <input type="hidden"  name="image_array[]" value= "${response.image_id}">
             <img src="${response.image_path}" class="card-img-top" alt="">
             <div class="card-body">
-              <a href="#" class="btn btn-danger">Delete</a>
+              <a href="javascript:void(0)" onclick="deleteImage(${response.image_id})" class="btn btn-danger">Delete</a>
             </div>
           </div> </div>`
 
           $('#product-gallery').append(html);
+      },
+      complete:function(file){
+        this.removeFile(file);
       }
   });
 
-
+    function deleteImage(id){
+      $("#image-row-"+id).remove();
+    }
   </script>
 
 @endsection

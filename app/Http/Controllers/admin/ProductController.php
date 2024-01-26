@@ -89,7 +89,7 @@ class ProductController extends Controller
 
                     // largeImages
                     $sPath = public_path() . '/temp/' . $tempImageInfo->name;
-                    $dPath = public_path() . '/uploads/product/large/' . $tempImageInfo->name;
+                    $dPath = public_path() . '/uploads/product/large/' . $imageName;
                     $image = ImageManager::imagick()->read($sPath);
                     $image = $image->resize(height: 1400);
                     $image->save($dPath);
@@ -97,7 +97,7 @@ class ProductController extends Controller
                     // smallImages
 
                     $sPath = public_path() . '/temp/' . $tempImageInfo->name;
-                    $dPath = public_path() . '/uploads/product/small/' . $tempImageInfo->name;
+                    $dPath = public_path() . '/uploads/product/small/' . $imageName;
                     $image = ImageManager::imagick()->read($sPath);
                     $image = $image->resize(300, 300);
                     $image->save($dPath);
@@ -121,4 +121,13 @@ class ProductController extends Controller
         }
     }
 
+    public function index(Request $request)
+    {
+        $products = Product::latest('id')->with('product_images');
+        if (!empty($request->get('keyword'))) {
+            $products = $products->where('title', 'like', '%' . $request->get('keyword') . '%');
+        }
+        $products = $products->paginate(10);
+        return view('admin.product.list', compact('products'));
+    }
 }

@@ -74,14 +74,14 @@
             <!-- Main content -->
             @yield('content')
             <!-- /.content -->
-        </div>
-        <!-- /.content-wrapper -->
-        <footer class="main-footer">
+                <!-- /.content-wrapper -->
+    <footer class="main-footer">
 
-            <strong>Copyright &copy; 2024 AsadShop All rights reserved.
-        </footer>
-
+        <strong>Copyright &copy; 2024 LaravelShop All rights reserved.
+    </footer>
     </div>
+
+
     <!-- ./wrapper -->
     <!-- jQuery -->
 	<script src="{{ asset('admin_assets/plugins/jquery/jquery.min.js')}}"></script>

@@ -130,4 +130,70 @@ class ProductController extends Controller
         $products = $products->paginate(10);
         return view('admin.product.list', compact('products'));
     }
+
+
+    public function edit($productId, Request $request)
+    {
+        $product = Product::find($productId)->with('product_images');
+        $categories = Category::orderBy('name', 'ASC')->get();
+        $brands = Brand::orderBy('name', 'ASC')->get();
+        $data = [];
+        $data['product'] = $product;
+        $data['categories'] = $categories;
+        $data['brands'] = $brands;
+
+
+        if (!empty($product)) {
+            return view('admin/product/edit', compact('product'));
+        } else {
+            return redirect()->route('products.index');
+        }
+
+    }
+    public function update($brandId, Request $request)
+    {
+
+        $brand = Brand::find($brandId);
+
+        if (empty($brand)) {
+            return response([
+                'status' => false,
+                'nofound' => true,
+                'errors' => 'Record not found'
+            ]);
+
+        } else {
+
+
+            $validator = Validator::make($request->all(), [
+                'name' => 'required',
+                'slug' => 'required|unique:sub_categories,slug,' . $brand->id . ',id',
+                'status' => 'required',
+            ]);
+
+            if ($validator->passes()) {
+
+                $brand->name = $request->name;
+                $brand->slug = $request->slug;
+                $brand->status = $request->status;
+                $brand->save();
+                $request->session()->flash("success", "Brand updated successfully");
+                return response([
+                    'status' => true,
+                    'success' => "Brand updated successfully"
+                ]);
+
+
+            } else {
+                $request->session()->flash("error", $validator->errors());
+                return response([
+                    'status' => false,
+                    'errors' => $validator->errors()
+                ]);
+            }
+        }
+    }
+
+
+
 }

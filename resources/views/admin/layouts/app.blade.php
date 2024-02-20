@@ -14,6 +14,7 @@
     <link rel="stylesheet" href={{ asset('admin_assets/plugins/dropzone/min/dropzone.min.css') }}>
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ asset('admin_assets/css/adminlte.min.css')}}">
+    <link rel="stylesheet" href="{{ asset('admin_assets/plugins/summernote/summernote-bs4.min.css')}}">
     <link rel="stylesheet" href="{{ asset('admin_assets/css/custom.css')}}">
     <meta name="csrf_token" content="{{ csrf_token() }}">
 
@@ -73,14 +74,14 @@
             <!-- Main content -->
             @yield('content')
             <!-- /.content -->
-        </div>
-        <!-- /.content-wrapper -->
-        <footer class="main-footer">
+                <!-- /.content-wrapper -->
+    <footer class="main-footer">
 
-            <strong>Copyright &copy; 2024 AsadShop All rights reserved.
-        </footer>
-
+        <strong>Copyright &copy; 2024 LaravelShop All rights reserved.
+    </footer>
     </div>
+
+
     <!-- ./wrapper -->
     <!-- jQuery -->
 	<script src="{{ asset('admin_assets/plugins/jquery/jquery.min.js')}}"></script>
@@ -93,6 +94,8 @@
     <!-- dropzone for uploading images -->
     <script src="{{ asset('admin_assets/plugins/dropzone/min/dropzone.min.js')}}"></script>
 
+    <script src="{{ asset('admin_assets/plugins/summernote/summernote-bs4.min.js')}}"></script>
+
 
     <script type="text/javascript">
 		$.ajaxSetup({
@@ -100,6 +103,12 @@
 				'X-CSRF-TOKEN': $('meta[name="csrf_token"]').attr('content')
 			}
 		});
+
+        $(document).ready(function(){
+            $('.summernote').summernote({
+                height: 250
+            });
+        })
     </script>
 
     @yield('customJs')

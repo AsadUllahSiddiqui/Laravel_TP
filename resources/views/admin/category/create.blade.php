@@ -3,9 +3,8 @@
 
 @section('content')
 <div class="content-wrapper">
-  <!-- Content Header (Page header) -->
   <section class="content-header">
-    <div class="container-fluid my-2">
+    <div class="container-fluid">
       <div class="row mb-2">
         <div class="col-sm-6">
           <h1>Create Category</h1>
@@ -17,7 +16,6 @@
     </div>
     <!-- /.container-fluid -->
   </section>
-  <!-- Main content -->
   <section class="content">
     <!-- Default box -->
     <div class="container-fluid">
@@ -72,7 +70,6 @@
     </div>
     <!-- /.card -->
   </section>
-  <!-- /.content -->
 </div>
 @endsection
 

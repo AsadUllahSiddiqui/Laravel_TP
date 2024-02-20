@@ -2,9 +2,12 @@
 
 use App\Http\Controllers\admin\AdminLoginController;
 use App\Http\Controllers\admin\BrandController;
+use App\Http\Controllers\admin\ProductController;
+use App\Http\Controllers\admin\ProductSubCategoryController;
 use App\Http\Controllers\admin\SubCategoryController;
 use App\Http\Controllers\admin\TempImagesController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\FrontController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -24,6 +27,8 @@ Route::get('/', function () {
   return view('welcome');
 });
 
+
+Route::get('/', [FrontController::class, 'index'])->name('front.home');
 
 Route::group(['prefix' => 'admin'], function () {
   Route::group(['middleware' => 'admin.guest'], function () {
@@ -59,8 +64,17 @@ Route::group(['prefix' => 'admin'], function () {
     Route::put('/brands/{brand}/', [BrandController::class, 'update'])->name('brands.update');
     Route::delete('/brands/{brand}', [BrandController::class, 'destroy'])->name('brands.destroy');
 
+    // Products routes
+    Route::get('/products/create', [ProductController::class, 'create'])->name('products.create');
+    Route::post('/products', [ProductController::class, 'store'])->name('products.store');
+    Route::get('/products', [ProductController::class, 'index'])->name('products.index');
+
     // temp image routes
     Route::post('/upload-temp-image', [TempImagesController::class, 'create'])->name('temp-images.create');
+
+
+    // get product's subcategories
+    Route::get('/product-subcategories', [ProductSubCategoryController::class, 'index'])->name('product-subcategories.index');
 
     // returns auto-geerated-slugs based on title
     Route::get('/getSlug', function (Request $request) {
